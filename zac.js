@@ -74,30 +74,28 @@ function myPreSubmitFunc() {
 	console.log( 'myPreSubmitFunc' );
 }*/
 
-
 if( Meteor.isServer ) { 
-	// Meteor.users.remove( {} );
-	// Players.remove( {} );
+	Meteor.startup( function() {
+		// Meteor.users.remove( {} );
+		// Players.remove( {} );
 
-	AvailableSurvivors.remove( {} );
-	[ 'Amy', 'Doug', 'Josh', 'Ned', 'Phil', 'Wanda' ].map( function( name ) {
-		AvailableSurvivors.insert( { 'name' : name } );
+		AvailableSurvivors.remove( {} );
+		[ 'Amy', 'Doug', 'Josh', 'Ned', 'Phil', 'Wanda' ].map( function( name ) {
+			AvailableSurvivors.insert( { 'name' : name } );
+		} );
+
 	} );
 
 	Meteor.onConnection( function( connection ) {
 		// console.log( connection.id );
 		// console.log( Players.find( {} ).count() );
 	} ); 
+	
 }
 
 if( Meteor.isClient ) {
 	Session.setDefault( 'username', null );
 	Session.setDefault( 'resolution', { 'width' : window.innerWidth, 'height' : window.innerHeight } );
-
-	window.onresize = function() {
-		Session.set( 'resolution', { 'width' : window.innerWidth, 'height' : window.innerHeight } );		
-		// console.log( Session.get( 'resolution' ) );
-	};
 
 	Accounts.onLogin( function() { 
 		var username = Meteor.user().username;
@@ -191,4 +189,13 @@ if( Meteor.isClient ) {
 			}
 		}
 	} );
+
+	window.onresize = function() {
+		Session.set( 'resolution', { 'width' : window.innerWidth, 'height' : window.innerHeight } );		
+		// console.log( Session.get( 'resolution' ) );
+	};
+
+	window.onload = function() {
+		var mission = new Mission( 'mission_01' );
+	};
 }

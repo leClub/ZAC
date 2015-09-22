@@ -1,12 +1,12 @@
 Meteor.methods( {
 	loginPlayer : function( username ) {
 		if( Players.find( { 'username' : username } ).count() == 0 ) {
-			console.log( 'Player', username, 'not found, creating new player' );
+			// console.log( 'Player', username, 'not found, creating new player' );
 			var player = new Player( username );
 			Players.insert( player );
 		}
 		else{
-			console.log( 'Player', username, 'found' );
+			// console.log( 'Player', username, 'found' );
 		}
 		Players.update(
 			{ 'username' : username },
@@ -23,7 +23,7 @@ Meteor.methods( {
 		
 		// Meteor.call( 'removeAllSurvivors', username );
 
-		console.log( 'Player', username, 'disconnected' );
+		// console.log( 'Player', username, 'disconnected' );
 	},
 
 	addSurvivor : function( username, survivorName ) {

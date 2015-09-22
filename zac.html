@@ -1,15 +1,12 @@
 <head>
 	<title>Zombies are coming</title>
 
-	<!-- Compiled and minified CSS -->
-	<link href='http://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet'>
-	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css'>
-
-	<!-- Compiled and minified JavaScript -->
-	<script type='text/javascript' src='https://code.jquery.com/jquery-2.1.1.min.js'></script>
-	<script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js'></script>
+	<link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/icon?family=Material+Icons'>
+	<link rel='stylesheet' type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css'>
+	<script type='text/javascript' src='/assets/jquery-2.1.1.min.js'></script>
+	<script type='text/javascript' src='/assets/materialize.min.js'></script>
 	
-	<link rel='stylesheet' href='main.css'>
+	<link rel='stylesheet' type='text/css' href='/main.css'>
 </head>
 
 <body>
@@ -30,7 +27,7 @@
 <template name='signin'>
 	<div class='container'>
 		<div id='signinContainer' class='row valign-wrapper'>
-			<div class='col s12 m8 offset-m2 l4 offset-l4 z-depth-1 valign'>
+			<div class='col s12 m8 offset-m2 l4 offset-l4 z-depth-2 valign'>
 				{{> atForm}}
 			</div>
 		</div>
@@ -38,7 +35,7 @@
 </template>
 
 <template name='navbar'>
-	<nav class='grey darken-4 z-depth-3'>
+	<nav class='blue-grey darken-4 z-depth-3'>
 		<div class='nav-wrapper'>
 			<a id='navTitle' href='#'>Zombies Are Coming</a>
 			<ul id='nav-mobile' class='right hide-on-med-and-down'>
@@ -52,7 +49,7 @@
 <template name='map'>
 	<div class='row'>
 		<div class='col s12'>
-			<img id='map' src='http://3.bp.blogspot.com/-8POUWdxxGC0/VBbp-X9xSuI/AAAAAAAABUg/3sjW5JsXCOg/s1600/switchcitycompletemap.png'>
+			<svg id='map' width='500' height='500' viewBox='0 0 500 500'></svg>
 		</div>
 	</div>
 </template>
@@ -60,7 +57,7 @@
 <template name='players'>
 	<div class='row'>
 		<div class='col s12'>
-			<ul class='tabs grey darken-4 z-depth-3'>
+			<ul class='tabs blue-grey darken-4 z-depth-3'>
 				{{> currentPlayerTab}}
 				{{> otherPlayersTab}}
 			</ul>
@@ -139,19 +136,19 @@
 
 <template name='survivor'>
 	<!-- {{#if isAvailable name}} -->
-		<div class='survivor'>
+		<div class='survivor z-depth-2'>
 			<svg class='board' viewBox='0 0 907 519'>
-				<image x='0' y='0' width='907' height='519' xlink:href='imgs/survivors/{{name}}.jpg'/>
+				<image x='0' y='0' width='907' height='519' xlink:href='/imgs/survivors/{{name}}.jpg'/>
 
 				<defs>
 					<clipPath id='clipPath_{{name}}'>
 						<rect x='22' y='22' width='{{killWidth}}' height='66'/>
 					</clipPath>
 				</defs>
-				<image x='22' y='22' width='864' height='66' xlink:href='imgs/survivors/counter_bg.png' style='clip-path: url(#clipPath_{{name}});'
+				<image x='22' y='22' width='864' height='66' xlink:href='/imgs/survivors/counter_bg.png' style='clip-path: url(#clipPath_{{name}});'
 				/>
 
-				<image x='{{killsCursorX}}' y='15' width='20' height='50' xlink:href='imgs/survivors/arrow.png'/>			
+				<image x='{{killsCursorX}}' y='15' width='20' height='50' xlink:href='/imgs/survivors/arrow.png'/>			
 			</svg>
 
 			{{#if isCurrentPlayer ../username}}

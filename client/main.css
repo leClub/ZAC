@@ -1,6 +1,11 @@
-@import url(https://fonts.googleapis.com/css?family=Lobster);
+/* @import url(https://fonts.googleapis.com/css?family=Lobster);
 
-@import url(https://fonts.googleapis.com/css?family=Roboto);
+@import url(https://fonts.googleapis.com/css?family=Roboto); */
+
+@font-face {
+	font-family: 'Martyric';
+	src: url('/Martyric_PersonalUse.ttf');
+}
 
 body{
 	background: #212121; 
@@ -17,12 +22,14 @@ body{
 
 #navTitle{
 	margin-left: 20px;
-	font-weight: 600;
+	font-family: 'Martyric';
+	font-size: 30px;
+	/*font-weight: 600;*/
 }
 
 #map{
+	margin: 40px auto 10px;
 	width: 100%;
-	margin: 20px auto 0;
 }
 
 .tabs{
