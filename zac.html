@@ -1,0 +1,164 @@
+<head>
+	<title>Zombies are coming</title>
+
+	<!-- Compiled and minified CSS -->
+	<link href='http://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet'>
+	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css'>
+
+	<!-- Compiled and minified JavaScript -->
+	<script type='text/javascript' src='https://code.jquery.com/jquery-2.1.1.min.js'></script>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js'></script>
+	
+	<link rel='stylesheet' href='main.css'>
+</head>
+
+<body>
+	{{#if currentUser}}
+		{{> navbar}}
+
+		<div id='main'>
+			{{> map}}
+
+			{{> players}}
+		</div>
+	{{else}}
+		{{> signin}}
+	{{/if}}
+</body>
+
+<!-- Templates -->
+<template name='signin'>
+	<div class='container'>
+		<div id='signinContainer' class='row valign-wrapper'>
+			<div class='col s12 m8 offset-m2 l4 offset-l4 z-depth-1 valign'>
+				{{> atForm}}
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name='navbar'>
+	<nav class='grey darken-4 z-depth-3'>
+		<div class='nav-wrapper'>
+			<a id='navTitle' href='#'>Zombies Are Coming</a>
+			<ul id='nav-mobile' class='right hide-on-med-and-down'>
+				<li><a>Hello {{username}}</a></li>
+				<li><a id='logout' href='#!'>Sign Out</a></li>
+			</ul>
+		</div>
+	</nav>
+</template>
+
+<template name='map'>
+	<div class='row'>
+		<div class='col s12'>
+			<img id='map' src='http://3.bp.blogspot.com/-8POUWdxxGC0/VBbp-X9xSuI/AAAAAAAABUg/3sjW5JsXCOg/s1600/switchcitycompletemap.png'>
+		</div>
+	</div>
+</template>
+
+<template name='players'>
+	<div class='row'>
+		<div class='col s12'>
+			<ul class='tabs grey darken-4 z-depth-3'>
+				{{> currentPlayerTab}}
+				{{> otherPlayersTab}}
+			</ul>
+		</div>
+		{{> currentPlayer}}
+		{{> otherPlayers}}
+	</div>
+	<script>
+		$(document).ready(function(){
+			$('ul.tabs').tabs();
+		});
+	</script>
+</template>
+
+<template name='currentPlayerTab'>
+	{{#with currentPlayer}}
+		{{> playerTab}}
+	{{/with}}
+</template>
+
+<template name='currentPlayer'>
+	{{#with currentPlayer}}
+		{{> player}}
+	{{/with}}
+</template>
+
+<template name='addSurvivor'>
+	<div id='addSurvivor'>
+		<a class='dropdown-button btn waves-effect waves-light grey darken-3' href='#' data-activates='dropdown1'>Add Survivor</a>
+		<ul id='dropdown1' class='dropdown-content'>
+			{{#each availableSurvivors}}
+				<li><a class='selectSurvivor' href='#!'>{{name}}</a></li>
+			{{/each}}
+		</ul>
+		<script>
+			$( '.dropdown-button' ).dropdown( {
+				inDuration : 300,
+				outDuration : 225,
+				constrain_width : true, // Does not change width of dropdown to that of the activator
+				hover : true, // Activate on hover
+				gutter : 0, // Spacing from edge
+				belowOrigin : false, // Displays dropdown below the button
+				alignment : 'left' // Displays dropdown with edge aligned to the left of button
+			} );		
+		</script>
+	</div>
+</template>
+
+<template name='otherPlayersTab'>
+	{{#each otherPlayers}}
+		{{> playerTab}}
+	{{/each}}
+</template>
+
+<template name='otherPlayers'>
+	{{#each otherPlayers}}
+		{{> player}}
+	{{/each}}
+</template>
+
+<template name='playerTab'>
+	<li class='tab col s3'><a href='#{{username}}'>{{username}} ({{survivors.length}} Survivors)</a></li>
+</template>
+
+<template name='player'>
+	<div id='{{username}}' class='player col s12'>
+		{{#each survivors}}
+			{{> survivor}}
+		{{/each}}
+		
+		{{#if isCurrentPlayer username}}
+			{{> addSurvivor}}
+		{{/if}}
+	</div>
+</template>
+
+<template name='survivor'>
+	<!-- {{#if isAvailable name}} -->
+		<div class='survivor'>
+			<svg class='board' viewBox='0 0 907 519'>
+				<image x='0' y='0' width='907' height='519' xlink:href='imgs/survivors/{{name}}.jpg'/>
+
+				<defs>
+					<clipPath id='clipPath_{{name}}'>
+						<rect x='22' y='22' width='{{killWidth}}' height='66'/>
+					</clipPath>
+				</defs>
+				<image x='22' y='22' width='864' height='66' xlink:href='imgs/survivors/counter_bg.png' style='clip-path: url(#clipPath_{{name}});'
+				/>
+
+				<image x='{{killsCursorX}}' y='15' width='20' height='50' xlink:href='imgs/survivors/arrow.png'/>			
+			</svg>
+
+			{{#if isCurrentPlayer ../username}}
+				<button id={{name}} class='removeSurvivor waves-effect waves-light red'>Remove Survivor</button>
+			{{/if}}
+		</div>
+	<!-- {{else}} -->
+		<!-- <p>Survivor not Available</p> -->
+	<!-- {{/if}} -->
+</template>
