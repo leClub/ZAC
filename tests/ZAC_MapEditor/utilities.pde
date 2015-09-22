@@ -21,7 +21,7 @@ void export() {
         for (int x = 0; x<map.nx; x++) {
             export.add("{");
             export.add("\"id\":\""+map.tiles[y][x].id+"\",");
-            export.add("\"orientation\":"+map.tiles[y][x].orientation);
+            export.add("\"dir\":"+map.tiles[y][x].dir);
             export.add(x<map.nx-1 ? "}," : "}");
         }
         export.add(y<map.ny-1 ? "]," : "]");
@@ -33,11 +33,12 @@ void export() {
         Room r = rooms.get(i);
         export.add("{");
         export.add("\"id\":" + r.id + ",");
+        export.add("\"t\":" + r.type + ",");
         export.add("\"x\":" + r.x + ",");
         export.add("\"y\":" + r.y + ",");
         export.add("\"w\":" + r.w + ",");
         export.add("\"h\":" + r.h + ",");
-        export.add("\"type\":" + r.type);
+        export.add("\"center\":{\"x\":" + int(r.center().x) + ", \"y\":" + int(r.center().y) + "}");
         export.add(i<rooms.size()-1 ? "}," : "}");
     }
     export.add("],");
@@ -98,8 +99,26 @@ void export() {
         export.add("{");
         export.add("\"idRoomA\":"+l.idRoomA+",");
         export.add("\"idRoomB\":"+l.idRoomB+",");
-        export.add("\"hasDoor\":"+l.hasDoor);
+        if (l.hasDoor == 1 ) {
+            export.add("\"hasDoor\":"+l.hasDoor+",");
+            export.add("\"x\":"+int(l.doorPos.x)+",");
+            export.add("\"y\":"+int(l.doorPos.y)+",");
+            export.add("\"dir\":"+l.dir);
+        } else export.add("\"hasDoor\":"+l.hasDoor);
         export.add(i<links.size()-1 ? "}," : "}");
+    }
+    export.add("],");
+
+    export.add("\"elements\":[");
+    for (int i=0; i<elements.size (); i++) {
+        Element e = elements.get(i);
+        export.add("{");
+        export.add("\"t\":"+e.type+",");
+        export.add("\"x\":"+int(e.pos.x)+",");
+        export.add("\"y\":"+int(e.pos.y)+",");
+        export.add("\"dir\":"+e.dir+",");
+        export.add("\"roomId\":"+e.roomId);
+        export.add(i<elements.size()-1 ? "}," : "}");
     }
     export.add("]");
 
@@ -117,19 +136,18 @@ void loadMap() {
 
     JSONArray tiles = json.getJSONArray("tiles");
     String[][] tileIds = new String[tiles.size()][tiles.getJSONArray(0).size()];
-    int[][] orientations = new int[tiles.size()][tiles.getJSONArray(0).size()];
+    int[][] dirs = new int[tiles.size()][tiles.getJSONArray(0).size()];
     for (int y=0; y<tiles.size (); y++) {
         JSONArray row = tiles.getJSONArray(y);
         for (int x=0; x<row.size (); x++) {
             JSONObject tile = row.getJSONObject(x);
             tileIds[y][x] = tile.getString("id");
-            orientations[y][x] = tile.getInt("orientation");
+            dirs[y][x] = tile.getInt("dir");
         }
     }
-    
-    map = new Map(tileIds, orientations);
-    size(TILE_SIZE * map.nx, TILE_SIZE * map.ny, P2D);
 
+    map = new Map(tileIds, dirs);
+    size(TILE_SIZE * map.nx, TILE_SIZE * map.ny, P2D);
 
     JSONArray JSONrooms = json.getJSONArray("rooms");
     for (int i=0; i<JSONrooms.size (); i++) {
@@ -139,9 +157,10 @@ void loadMap() {
         int y = JSONroom.getInt("y");
         int w = JSONroom.getInt("w");
         int h = JSONroom.getInt("h");
-        int type = JSONroom.getInt("type");
+        int type = JSONroom.getInt("t");
         rooms.add(new Room(id, x, y, w, h, type));
     }
+    counter = rooms.get(rooms.size() - 1).id + 1;
 
     JSONArray JSONlinks = json.getJSONArray("links");
     for (int i=0; i<JSONlinks.size (); i++) {
@@ -149,7 +168,31 @@ void loadMap() {
         int idRoomA = JSONlink.getInt("idRoomA");
         int idRoomB = JSONlink.getInt("idRoomB");
         int hasDoor = JSONlink.getInt("hasDoor");
-        links.add(new Link(idRoomA, idRoomB, hasDoor));
+        if (hasDoor == 0) links.add(new Link(idRoomA, idRoomB, hasDoor));
+        else {
+            int x = JSONlink.getInt("x");
+            int y = JSONlink.getInt("y");
+            int dir = JSONlink.getInt("dir");
+            links.add(new Link(idRoomA, idRoomB, hasDoor, x, y, dir));
+        }
+        /*
+                if (l.hasDoor == 1 ) {
+         export.add("\"hasDoor\":"+l.hasDoor+",");
+         export.add("\"doorPos\":{\"x\":"+l.doorPos.x+",\"y\":"+l.doorPos.x+"},");
+         export.add("\"dir\":"+l.dir+",");
+         } else export.add("\"hasDoor\":"+l.hasDoor);
+         */
+    }
+
+    JSONArray JSONelements = json.getJSONArray("elements");
+    for (int i=0; i<JSONelements.size (); i++) {
+        JSONObject JSONEl = JSONelements.getJSONObject(i);
+        int type = JSONEl.getInt("t");
+        int x = JSONEl.getInt("x");
+        int y = JSONEl.getInt("y");
+        int dir = JSONEl.getInt("dir");
+        int roomId = JSONEl.getInt("roomId");
+        elements.add(new Element(type, x, y, dir, roomId));
     }
 }
 

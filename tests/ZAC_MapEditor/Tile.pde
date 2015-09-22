@@ -1,7 +1,7 @@
 class Tile {
     String id;
     PImage img;
-    int orientation = 0;
+    int dir = 0;
     int w, h;
 
     Tile(String _id) {
@@ -10,9 +10,9 @@ class Tile {
         img.resize(TILE_SIZE, TILE_SIZE);
     }
     
-    Tile(String _id, int _orientation) {
+    Tile(String _id, int _dir) {
         id = _id;
-        orientation = _orientation;
+        dir = _dir;
         img = loadImage(id + ".jpg");
         img.resize(TILE_SIZE, TILE_SIZE);
     }
@@ -24,7 +24,7 @@ class Tile {
             pushMatrix();
             {
                 translate(TILE_SIZE/2, TILE_SIZE/2);
-                rotate(orientation * PI / 2.);
+                rotate(dir * PI / 2.);
                 translate(-TILE_SIZE/2, -TILE_SIZE/2);
                 image(img, 0, 0);
                 /*

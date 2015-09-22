@@ -10,10 +10,17 @@ boolean showRooms = false;
 ArrayList<Link> links;
 int currentOver, linkStart;
 boolean showLinks = false;
+boolean placingDoor = false;
+
+ArrayList<Element> elements;
+Element el;
+boolean placingElement = false;
 
 void setup() {
     rooms = new ArrayList<Room>();
     links = new ArrayList<Link>();
+    elements = new ArrayList<Element>();
+    el = new Element(0);
 
     //createMap();
     loadMap();
@@ -23,6 +30,16 @@ void draw() {
     background(127);
     map.draw();
 
+    for (int i=rooms.size ()-1; i>=0; i--) {
+        Room r = rooms.get(i);
+        r.mouseOver();
+    }
+
+    for (int i=elements.size ()-1; i>=0; i--) {
+        Element e = elements.get(i);
+        e.draw();
+    }
+
     if (showRooms) {
         for (int i=rooms.size ()-1; i>=0; i--) {
             Room r = rooms.get(i);
@@ -30,17 +47,16 @@ void draw() {
         }
     }
 
-    if (showLinks) {
-        for (int i=links.size ()-1; i>=0; i--) {
-            Link l = links.get(i);
-            l.draw();
-        }
+    for (int i=links.size ()-1; i>=0; i--) {
+        Link l = links.get(i);
+        l.draw();
     }
 
+    // when over a room, show links and linked rooms
     if (!showRooms && !showLinks) {
         for (int i=rooms.size ()-1; i>=0; i--) {
             Room r = rooms.get(i);
-            if (r.mouseOver()) {
+            if (r.isOver) {
                 r.draw();
                 for (int j=links.size ()-1; j>=0; j--) {
                     Link l = links.get(j);
@@ -58,7 +74,15 @@ void draw() {
         }
     }
 
-    if (isDrawingRoom) {
+    if (placingElement) {
+        el.pos.x = mouseX;
+        el.pos.y = mouseY;
+        el.draw();
+    } else if (placingDoor) {
+        Link l = links.get(links.size() -1);
+        l.doorPos.x = mouseX;
+        l.doorPos.y = mouseY;
+    } else if (isDrawingRoom) {
         noStroke();
         fill(255, 130);
         rect(startX, startY, mouseX - startX, mouseY - startY);
@@ -66,42 +90,93 @@ void draw() {
 }
 
 void mouseClicked() {
-    map.tiles[mouseY / TILE_SIZE][mouseX / TILE_SIZE].orientation++;
+    if (placingElement) {
+        elements.add( new Element(el.type, el.pos.x, el.pos.y, el.dir, currentOver));
+        placingElement = false;
+    } else if (placingDoor) {
+        placingDoor = false;
+    } else {
+        map.tiles[mouseY / TILE_SIZE][mouseX / TILE_SIZE].dir++;
+    }
 }
 
 void mousePressed() {
-    startX = mouseX;
-    startY = mouseY;
+    if (placingElement || placingDoor) {
+    } else {
+        startX = mouseX;
+        startY = mouseY;
+    }
 }
 
 void mouseReleased() {
-    if (isDrawingRoom) {
+    if (placingElement || placingDoor) {
+    } else if (isDrawingRoom) {
         rooms.add( new Room(counter, startX, startY, mouseX - startX, mouseY - startY) );
         counter++;
+        isDrawingRoom = false;
     }
-
-    isDrawingRoom = false;
 }
 
 void mouseDragged() {
-    isDrawingRoom = true;
+    if (placingElement || placingDoor) {
+    } else {
+        isDrawingRoom = true;
+    }
 }
 
 void keyPressed() {
-    if (key == 'a') {
+    if (placingElement) {
+        switch(key) {
+        case '0':
+            el.setType(0);
+            break;
+        case '1':
+            el.setType(1);
+            break;
+        case '2':
+            el.setType(2);
+            break;
+        case '3':
+            el.setType(3);
+            break;
+        case '4':
+            el.setType(4);
+            break;
+        case 'r':
+            Link l = links.get(links.size() -1);
+            l.dir = (l.dir + 1) % 4;
+            println("l.dir", l.dir);
+            break;
+        }
+    } else if (placingDoor) {
+        if (key == 'r') {
+            Link l = links.get(links.size() -1);
+            l.dir = (l.dir + 1) % 4;
+            println("l.dir", l.dir);
+        }
+    } else if (key == 'a') {
         linkStart = currentOver;
     } else if ( key == 'b') {
         links.add(new Link(linkStart, currentOver, 0));
     } else if ( key == 'c') {
         links.add(new Link(linkStart, currentOver, 1));
+        placingDoor = true;
     } else if (key == ' ') {
         export();
     } else if (key == 'l') {
         showLinks = !showLinks;
     } else if (key == 'v') {
         showRooms = !showRooms;
+    } else if (key == 'e') {
+        placingElement = true;
+    } else if (key == 'E') {
+        if (elements.size()>0) {
+            elements.remove(elements.size()-1);
+        }
     } else if (key == '-') {
-        rooms.remove(rooms.size()-1);
+        if (rooms.size()>0) {
+            rooms.remove(rooms.size()-1);
+        }
     } else {
         for (int i=rooms.size ()-1; i>=0; i--) {
             Room r = rooms.get(i);
