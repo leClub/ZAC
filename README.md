@@ -1,5 +1,13 @@
 # Zombies Are Coming
 
+### TODO
+- chat system by room
+- mission selection
+- mission importation
+- game AI
+- options: save game / keep survivors on exit / ...
+
+
 ### MeteorJS
 http://docs.meteor.com/#/full/  
 

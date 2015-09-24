@@ -1,15 +1,18 @@
-/* @import url(https://fonts.googleapis.com/css?family=Lobster);
-
-@import url(https://fonts.googleapis.com/css?family=Roboto); */
-
 @font-face {
 	font-family: 'Martyric';
 	src: url('/Martyric_PersonalUse.ttf');
 }
 
 body{
-	background: #212121; 
+	background: #212121;
 	color: #FFF;
+}
+
+#page404{
+	margin-top: 100px;
+	font-family: 'Martyric';
+	font-size: 200px;
+	color: #fff;
 }
 
 #signinContainer{
@@ -18,6 +21,18 @@ body{
 
 .atform{
 	background: #424242;
+}
+
+#at-btn{
+	margin-bottom: 15px;
+}
+
+#roomSelectionContainer{
+	margin-top: 150px;
+}
+
+#roomSelectionBtn{
+	margin-bottom: 15px;
 }
 
 #navTitle{
