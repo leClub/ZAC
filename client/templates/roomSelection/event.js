@@ -3,7 +3,6 @@ Template.roomSelection.events( {
 		event.preventDefault();
 		
 		var roomId = $( '#roomIdField' )[ 0 ].value;
-		console.log( 'join room', roomId );
 		if(roomId != '' ) {
 			Meteor.call( 'joinRoom', slugify(roomId), function() {
 				Router.go('/rooms/' + slugify( $( '#roomIdField' )[ 0 ].value) ) ;

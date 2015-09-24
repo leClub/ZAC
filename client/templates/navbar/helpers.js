@@ -1,5 +1,7 @@
 Template.navbar.helpers( {
 	username : function() {
-		return Session.get( 'username' );
+		var username = Session.get( 'username' );
+		if( username == null ) AccountsTemplates.logout();
+		else return username;
 	}
 } );
