@@ -9,7 +9,7 @@ Template.roomSelection.events( {
 			} );
 		}
 		else return;
-	},
+	}
 } );
 
 function slugify( text ) {

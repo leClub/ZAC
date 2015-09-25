@@ -1,0 +1,14 @@
+<template name='chat'>
+	<div id='chat' class='hoverable'>
+		<form class='newMessage hoverable'>
+			<input type='text' name='text' placeholder='Enter message'>
+		</form>
+		<div id="ulContainer">
+			<ul>
+				{{#each messages}}
+					<li>{{msg}}</li>
+				{{/each}}
+			</ul>
+		</div>
+	</div>
+</template>

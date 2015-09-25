@@ -12,6 +12,8 @@ Meteor.methods( {
 			{ 'username' : username },
 			{ $set : { 'connected' : true } }
 		);
+
+		return username;
 		// console.log( 'nbPlayers:', Players.find( {} ).count() );
 	},
 
@@ -36,13 +38,13 @@ Meteor.methods( {
 			{ 'username' : username },
 			{ $push : { 'survivors' : new Survivor( survivorName ) } }
 		);
-		Meteor.call( 'removeSurvivorFromAvailable', survivorName );
+		// Meteor.call( 'removeSurvivorFromAvailable', survivorName );
 		// console.log( username, 'survivors:', Players.findOne( { 'username' : username } ).survivors );
 	},
 
-	removeSurvivorFromAvailable : function( survivorName ) {
-		// AvailableSurvivors.remove( { 'name' : survivorName } );
-	},
+	// removeSurvivorFromAvailable : function( survivorName ) {
+	// 	// AvailableSurvivors.remove( { 'name' : survivorName } );
+	// },
 
 	removeAllSurvivors : function( username ) {
 		var survivors = Players.findOne( { 'username' : username } ).survivors;
@@ -56,13 +58,13 @@ Meteor.methods( {
 			{ 'username' : username },
 			{ $pull : { 'survivors' : new Survivor(survivorName) } }
 		);
-		Meteor.call( 'addSurvivorToAvailable', survivorName );
+		// Meteor.call( 'addSurvivorToAvailable', survivorName );
 		// console.log( username, 'survivors:', Players.findOne( { 'username' : username } ).survivors );
 	},
 
-	addSurvivorToAvailable : function( survivorName ) {
-		// AvailableSurvivors.insert( { 'name' : survivorName } );
-	},
+	// addSurvivorToAvailable : function( survivorName ) {
+	// 	// AvailableSurvivors.insert( { 'name' : survivorName } );
+	// },
 
 	joinRoom : function( roomId ) {
 		if( ! Meteor.call( 'RoomExist', roomId ) ) {
@@ -78,7 +80,23 @@ Meteor.methods( {
 		console.log( roomId, 'RoomExist: ', Meteor.call( 'RoomExist', roomId ) );
 	},
 
-	RoomExist : function ( roomId ) {
-		return ( Rooms.find( { 'roomId' : roomId } ).count() != 0 ) ? Rooms.findOne( { 'roomId' : roomId } ) : false;
+	RoomExist : function( roomId ) {
+		return ( Rooms.find( { roomId : roomId } ).count() != 0 ) ? 
+			Rooms.findOne( { roomId : roomId } ) : 
+			false;
+	},
+
+	newMessage : function( roomId, msg ) {
+		Rooms.update(
+			{ roomId : roomId },
+			{ $push : { messages : { $each : [ msg ], $position : 0 } } }
+		);
+
+		Rooms.update(
+			{ roomId : roomId }, 
+			{ $pull : { messages : { createdAt : { $lt : Date.now() - 5 } } } }//, 
+			// { $pull : { messages : { msg : 'makio135: test' } } }, 
+			// { multi : true }
+		);
 	}
 } );

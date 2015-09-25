@@ -1,23 +1,26 @@
-<template name="roomSelection">
-	<div class="container">
-		<div id="roomSelectionContainer" class="row valign-wrapper">
-			<div class="col s12 m8 offset-m2 l4 offset-l4 z-depth-2 valign">
-				<div class="at-form">
-					<div class="at-title">
-						<h3 class="header">Enter room id:</h3>
-					</div>
-					<div class="roomSelection">
-						<form role="form" id="roomSelectionForm" novalidate="" action="#" method="POST">
-							<div class="at-input input-field">
-								<input class="validate valid" type="text" id="roomIdField" name="roomIdField" placeholder=" " autocapitalize="none" autocorrect="off">
-							</div>
-							<button class="at-btn submit waves-effect waves-light btn" id="roomSelectionBtn">
-								Join Room / Create Room
-							</button>
-						</form>
-					</div>
+<template name='roomSelection'>
+	<div id="roomSelectionContainer" class='row valign-wrapper'>
+		<div class='col s12 m8 offset-m2 l4 offset-l4 grey darken-4 hoverable valign'>
+			<div class='at-form'>
+				<div class='at-title'>
+					<h3 class='header'>Enter room id:</h3>
+				</div>
+				<div class='roomSelection'>
+					<form role='form' id='roomSelectionForm' novalidate='' action='#' method='POST'>
+						<div class='at-input input-field'>
+							<input class='validate valid' type='text' id='roomIdField' name='roomIdField' placeholder=' ' autocapitalize='none' autocorrect='off'>
+						</div>
+						<button class='at-btn submit waves-effect waves-light btn' id='roomSelectionBtn'>
+							Join Room / Create Room
+						</button>
+					</form>
 				</div>
 			</div>
 		</div>
 	</div>
+	<script>
+		( function( w, d, u, d3, $ ) {
+			document.getElementById( 'roomSelectionContainer' ).style.height = window.innerHeight - parseInt( $( '.nav-wrapper' ).css( 'height' ) ) + 'px';
+		} )( window, document, undefined, d3, $ );
+	</script>
 </template>

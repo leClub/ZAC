@@ -3,66 +3,53 @@
 	src: url('/Martyric_PersonalUse.ttf');
 }
 
-body{
+body {
 	background: #212121;
 	color: #FFF;
+	overflow: hidden;
 }
 
 button{
 	border: 0;
 }
 
-#navTitle{
-	margin-left: 20px;
-	font-family: 'Martyric';
-	font-size: 30px;
-	/*font-weight: 600;*/
+nav{
+	position: fixed;
+	top: 0;
+	height: 64px;
+	z-index: 999;
+
+	#navTitle{
+		margin-left: 20px;
+		font-family: 'Martyric';
+		font-size: 30px;
+		/*font-weight: 600;*/
+	}
+}
+
+#content{
+	width: 100vw;
+	margin-top: 60px;
 }
 
 #roomSelectionContainer{
-	margin-top: 150px;
+	margin-top: 0px;
 }
 
 #roomSelectionBtn{
 	margin-bottom: 15px;
 }
 
-
-
-.tabs{
-	margin: 0 0 20px 0;
+::-webkit-scrollbar {
+	width: 12px;
 }
-
-#addSurvivor{
-	margin: 10px 0;
+ 
+::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+	border-radius: 10px;
 }
-
-.survivor{
-	margin: 10px auto;
-	
-	width: 907px;
-	/*width:100%;*/
-	height: 519px;
-	/*overflow-x: hidden;*/
-	position: relative;
-	
-	.board{
-		position: absolute;
-		top: 0;
-		left: 0;
-		/*width: 100%;*/
-	}
-
-	.killsCursor{
-		position: absolute;
-		top: 18px;
-		/*left: 22px;*/
-		transition: all 1s ease;
-	}
-
-	.removeSurvivor{
-		position: absolute !important;
-		left: 5px;
-		bottom: 5px;
-	}
+ 
+::-webkit-scrollbar-thumb {
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
 }

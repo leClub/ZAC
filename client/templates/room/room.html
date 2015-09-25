@@ -1,8 +1,23 @@
 <template name="room">
-		{{ test room.roomId }}
-		<h1 id='roomName'>{{ room.roomId }}</h1>
-		<div id='main'>
-			<!-- {{> map}} -->
-			<!-- {{> players}} -->
+	{{ test room.roomId }}
+	<div id='room' class='row'>
+		<div id='roomSide' class='col s2'>
+			<h1 id='roomName'>#{{ room.roomId }}</h1>
+			{{> chat }}
 		</div>
+		<div id='roomMain' class='col s10'>
+			{{> map }}
+			<!-- {{> players }} -->
+		</div>
+	</div>
+
+	<script>
+		( function( w, d, u, d3, $ ) {
+			d3.select('#roomSide').style('height', window.innerHeight - parseInt($('.nav-wrapper').css('height')) + 'px');
+
+			d3.select('#chat').style('height', parseInt($('#roomSide').css('height')) - parseInt($('#roomName').css('height')) - 70 + 'px');
+
+			d3.select('#ulContainer').style('max-height', parseInt($('#chat').css('height')) - parseInt($('#chat>form').css('height')) + 'px');
+		} )( window, document, undefined, d3, $ );
+	</script>
 </template>

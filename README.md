@@ -6,34 +6,37 @@
 - mission importation
 - game AI
 - options: save game / keep survivors on exit / ...
+___
+### Ressources
+MeteorJS
+- http://docs.meteor.com/#/full/  
 
+MongoDB
+- http://docs.mongodb.org/manual/reference/  
 
-### MeteorJS
-http://docs.meteor.com/#/full/  
+Blaze
+- https://meteor.github.io/blaze/  
 
-### MongoDB
-http://docs.mongodb.org/manual/reference/  
+Spacebars
+- https://github.com/meteor/meteor/blob/devel/packages/spacebars/README.md  
+- https://www.discovermeteor.com/blog/spacebars-secrets-exploring-meteor-new-templating-engine/  
 
-### Blaze
-https://meteor.github.io/blaze/  
+Meteor-useraccounts
+- https://github.com/meteor-useraccounts/core/blob/master/Guide.md  
 
-### Spacebars
-https://github.com/meteor/meteor/blob/devel/packages/spacebars/README.md  
-https://www.discovermeteor.com/blog/spacebars-secrets-exploring-meteor-new-templating-engine/  
+materialize css
+- http://materializecss.com/  
 
-### Meteor-useraccounts
-https://github.com/meteor-useraccounts/core/blob/master/Guide.md  
+D3.JS
+- https://atmospherejs.com/d3js/d3  
+- https://github.com/mbostock/d3/wiki/API-Reference  
 
-### materialize css
-http://materializecss.com/  
+SVG
+- http://tutorials.jenkov.com/svg/index.html
 
-### D3.JS
-https://atmospherejs.com/d3js/d3  
-https://github.com/mbostock/d3/wiki/API-Reference  
+Iron-Router
+- https://github.com/meteor-useraccounts/iron-routing  
 
-### SVG
-http://tutorials.jenkov.com/svg/index.html
-
-### Other Ressources
-https://github.com/meteor-useraccounts/iron-routing  
-https://atmospherejs.com/fabienb4/materialize-components
+Other Ressources
+- https://github.com/Giphy/GiphyAPI  
+- https://atmospherejs.com/fabienb4/materialize-components
