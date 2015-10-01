@@ -7,7 +7,12 @@ Template.chat.events( {
 			var room = Rooms.findOne(),
 				player = Players.findOne();
 
-			Meteor.call( 'newMessage', room.roomId, { 'msg' : player.username + ': ' + text , 'createdAt' : Date.now() } );
+			if( text == '/clear' ){
+				Meteor.call( 'clearMessages', room.roomId );
+			}
+			else{
+				Meteor.call( 'newMessage', room.roomId, { 'user' : player.username, 'text' : text , 'createdAt' : Date.now() } );
+			}
 
 			// Clear form
 			event.target.text.value = '';

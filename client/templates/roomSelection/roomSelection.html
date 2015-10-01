@@ -18,9 +18,16 @@
 			</div>
 		</div>
 	</div>
+	
 	<script>
-		( function( w, d, u, d3, $ ) {
+		function roomSelectionContainerResize(){
 			document.getElementById( 'roomSelectionContainer' ).style.height = window.innerHeight - parseInt( $( '.nav-wrapper' ).css( 'height' ) ) + 'px';
+		}
+
+		( function( w, d, u, d3, $ ) {
+			roomSelectionContainerResize();
 		} )( window, document, undefined, d3, $ );
+		
+		window.addEventListener('resize', roomSelectionContainerResize);
 	</script>
 </template>

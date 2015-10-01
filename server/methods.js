@@ -28,6 +28,46 @@ Meteor.methods( {
 		// console.log( 'Player', username, 'disconnected' );
 	},
 
+	joinRoom : function( roomId ) {
+		if( ! Meteor.call( 'checkRoomExistence', roomId ) ) {
+			console.log( 'room', roomId, 'not found, creating it');
+			Rooms.insert( { 
+				'roomId' : roomId ,
+				'players': [],
+				'messages': [],
+				'survivors' : [ 'Amy', 'Doug', 'Josh', 'Ned', 'Phil', 'Wanda' ],
+				'mission': ''
+			} );
+		}
+		console.log( roomId, 'checkRoomExistence: ', Meteor.call( 'checkRoomExistence', roomId ) );
+	},
+
+	checkRoomExistence : function( roomId ) {
+		return ( Rooms.find( { roomId : roomId } ).count() != 0 ) ? 
+			Rooms.findOne( { roomId : roomId } ) : 
+			false;
+	},
+
+	newMessage : function( roomId, msg ) {
+		Rooms.update(
+			{ roomId : roomId },
+			{ $push : { messages : { $each : [ msg ], $position : 0 } } }
+		);
+	},
+
+	clearMessages : function( roomId ) {
+		Rooms.update(
+			{ roomId : roomId }, 
+			{ $pull : { messages : { createdAt : { $lt : Date.now() } } } }
+		);
+	},
+
+	loadMissions : function() {
+		var data = JSON.parse( Assets.getText( 'missions.json' ) );
+		// console.log( data.missions );
+		return data.missions;
+	},
+
 	createMission : function( missionName ) {
 		return JSON.parse( Assets.getText( missionName + '.json' ) );
 		// return HTTP.get( Meteor.absoluteUrl( 'missions/' + missionName + '.json' ) ).data;
@@ -43,7 +83,11 @@ Meteor.methods( {
 	},
 
 	// removeSurvivorFromAvailable : function( survivorName ) {
-	// 	// AvailableSurvivors.remove( { 'name' : survivorName } );
+		// AvailableSurvivors.remove( { 'name' : survivorName } );
+	// },
+
+	// addSurvivorToAvailable : function( survivorName ) {
+		// AvailableSurvivors.insert( { 'name' : survivorName } );
 	// },
 
 	removeAllSurvivors : function( username ) {
@@ -60,43 +104,5 @@ Meteor.methods( {
 		);
 		// Meteor.call( 'addSurvivorToAvailable', survivorName );
 		// console.log( username, 'survivors:', Players.findOne( { 'username' : username } ).survivors );
-	},
-
-	// addSurvivorToAvailable : function( survivorName ) {
-	// 	// AvailableSurvivors.insert( { 'name' : survivorName } );
-	// },
-
-	joinRoom : function( roomId ) {
-		if( ! Meteor.call( 'RoomExist', roomId ) ) {
-			console.log( 'room', roomId, 'not found, creating it');
-			Rooms.insert( { 
-				'roomId' : roomId ,
-				'players': [],
-				'messages': [],
-				'survivors' : [ 'Amy', 'Doug', 'Josh', 'Ned', 'Phil', 'Wanda' ],
-				'mission': ''
-			} );
-		}
-		console.log( roomId, 'RoomExist: ', Meteor.call( 'RoomExist', roomId ) );
-	},
-
-	RoomExist : function( roomId ) {
-		return ( Rooms.find( { roomId : roomId } ).count() != 0 ) ? 
-			Rooms.findOne( { roomId : roomId } ) : 
-			false;
-	},
-
-	newMessage : function( roomId, msg ) {
-		Rooms.update(
-			{ roomId : roomId },
-			{ $push : { messages : { $each : [ msg ], $position : 0 } } }
-		);
-
-		Rooms.update(
-			{ roomId : roomId }, 
-			{ $pull : { messages : { createdAt : { $lt : Date.now() - 5 } } } }//, 
-			// { $pull : { messages : { msg : 'makio135: test' } } }, 
-			// { multi : true }
-		);
 	}
 } );
