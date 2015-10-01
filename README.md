@@ -3,7 +3,7 @@
 ### TODO
 - mission importation
 - game AI
-- options: save game / keep survivors on exit / ...
+- options: save game / keep survivors on exit / ...  
 ___
 ### Ressources
 MeteorJS

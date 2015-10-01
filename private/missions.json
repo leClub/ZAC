@@ -1,0 +1,12 @@
+{
+  "missions": [
+    {
+      "name": "Mission 01",
+      "file": "mission_01.json"
+    },
+    {
+      "name": "Mission 02",
+      "file": "mission_02.json"
+    }
+  ]
+}
