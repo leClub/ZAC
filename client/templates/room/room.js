@@ -1,22 +1,30 @@
+Template.room.onRendered( function() {
+	var room = Rooms.findOne(),
+		player = Players.findOne();
+	console.log( room );
+	console.log( player );
+	// Meteor.call( 'userInRoom', player.username, room.roomId );
+} );
+
 Template.room.helpers( {
-	room: function() {
+	room : function() {
 		var room = Rooms.findOne();
 		// console.log( room );
 		return room;
 	},
 	
-	test: function( roomId ) {
+	test : function( roomId ) {
 		// console.log( roomId );
 		if ( roomId == undefined ) {
 			window.location = '/';
 		}
 	},
 	
-	missionNotSet: function( mission ) {
+	missionNotSet : function( mission ) {
 		return mission == '';
 	},
 
-	missions: function() {
+	missions : function() {
 		var missions = Meteor.call( 'loadMissions', function( error, result ){
 			if( error ) return;
 			
@@ -32,5 +40,14 @@ Template.room.helpers( {
 
 			$('.dropdown-button').dropdown();
 		} );
+	}
+} );
+
+Template.room.events( {
+	'click .mission' : function( event ) {
+		event.preventDefault();
+		var missionFile = event.target.attributes[ 'data-file' ].nodeValue;
+		var room = Rooms.findOne();
+		Meteor.call( 'setRoomMission', room.roomId, missionFile );
 	}
 } );

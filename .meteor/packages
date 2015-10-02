@@ -6,7 +6,6 @@
 
 accounts-password
 useraccounts:materialize
-d3js:d3
 standard-minifiers
 meteor-base
 mobile-experience
@@ -25,3 +24,4 @@ ecmascript
 iron:router
 http
 less
+d3

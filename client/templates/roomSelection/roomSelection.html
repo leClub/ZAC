@@ -21,7 +21,8 @@
 	
 	<script>
 		function roomSelectionContainerResize(){
-			document.getElementById( 'roomSelectionContainer' ).style.height = window.innerHeight - parseInt( $( '.nav-wrapper' ).css( 'height' ) ) + 'px';
+			if( document.getElementById( 'roomSelectionContainer' ) )
+				document.getElementById( 'roomSelectionContainer' ).style.height = window.innerHeight - parseInt( $( '.nav-wrapper' ).css( 'height' ) ) + 'px';
 		}
 
 		( function( w, d, u, d3, $ ) {

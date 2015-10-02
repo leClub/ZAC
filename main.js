@@ -13,5 +13,5 @@ if( Meteor.isServer ) {
 }
 
 if( Meteor.isClient ) {
-	console.clear();
+	// console.clear();
 }

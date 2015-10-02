@@ -128,11 +128,11 @@ void export() {
     for ( int i=0; i<export.size (); i++) {
         json[i] = export.get(i);
     }
-    saveStrings("data/mission.json", json);
+    saveStrings("data/"+MISSION_NAME+".json", json);
 }
 
 void loadMap() {
-    JSONObject json = loadJSONObject("mission.json");
+    JSONObject json = loadJSONObject(MISSION_NAME+".json");
 
     JSONArray tiles = json.getJSONArray("tiles");
     String[][] tileIds = new String[tiles.size()][tiles.getJSONArray(0).size()];
@@ -175,15 +175,7 @@ void loadMap() {
             int dir = JSONlink.getInt("dir");
             links.add(new Link(idRoomA, idRoomB, hasDoor, x, y, dir));
         }
-        /*
-                if (l.hasDoor == 1 ) {
-         export.add("\"hasDoor\":"+l.hasDoor+",");
-         export.add("\"doorPos\":{\"x\":"+l.doorPos.x+",\"y\":"+l.doorPos.x+"},");
-         export.add("\"dir\":"+l.dir+",");
-         } else export.add("\"hasDoor\":"+l.hasDoor);
-         */
     }
-
     JSONArray JSONelements = json.getJSONArray("elements");
     for (int i=0; i<JSONelements.size (); i++) {
         JSONObject JSONEl = JSONelements.getJSONObject(i);

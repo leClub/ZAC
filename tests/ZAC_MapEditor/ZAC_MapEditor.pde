@@ -1,5 +1,5 @@
 final static int TILE_SIZE = 500;
-
+final static String MISSION_NAME = "mission_02";
 Map map;
 
 ArrayList<Room> rooms;
@@ -143,9 +143,9 @@ void keyPressed() {
             el.setType(4);
             break;
         case 'r':
-            Link l = links.get(links.size() -1);
-            l.dir = (l.dir + 1) % 4;
-            println("l.dir", l.dir);
+            Element e = elements.get(elements.size() -1);
+            e.dir = (e.dir + 1) % 4;
+            println("e.dir", e.dir);
             break;
         }
     } else if (placingDoor) {

@@ -4,6 +4,7 @@ Template.singlePlayer.helpers( {
 		// console.log( player );
 		return player;
 	},
+	
 	test : function( username ) {
 		// console.log( username );
 		if( username == undefined ) {

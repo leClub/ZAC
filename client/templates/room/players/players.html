@@ -2,12 +2,12 @@
 	<div class='row'>
 		<div class='col s12'>
 			<ul class='tabs blue-grey darken-4 z-depth-3'>
-				{{> currentPlayerTab}}
-				{{> otherPlayersTab}}
+				{{> currentPlayerTab }}
+				{{> otherPlayersTab }}
 			</ul>
 		</div>
-		{{> currentPlayer}}
-		{{> otherPlayers}}
+		{{> currentPlayer }}
+		{{> otherPlayers }}
 	</div>
 	<script>
 		$(document).ready(function(){
@@ -17,24 +17,24 @@
 </template>
 
 <template name='currentPlayerTab'>
-	{{#with currentPlayer}}
-		{{> playerTab}}
-	{{/with}}
+	{{#with currentPlayer }}
+		{{> playerTab }}
+	{{/with }}
 </template>
 
 <template name='currentPlayer'>
-	{{#with currentPlayer}}
-		{{> player}}
-	{{/with}}
+	{{#with currentPlayer }}
+		{{> player }}
+	{{/with }}
 </template>
 
 <template name='addSurvivor'>
 	<div id='addSurvivor'>
 		<a class='dropdown-button btn waves-effect waves-light grey darken-3' href='#' data-activates='dropdown1'>Add Survivor</a>
 		<ul id='dropdown1' class='dropdown-content'>
-			{{#each availableSurvivors}}
-				<li><a class='selectSurvivor' href='#!'>{{name}}</a></li>
-			{{/each}}
+			{{#each availableSurvivors }}
+				<li><a class='selectSurvivor' href='#!'>{{ name }}</a></li>
+			{{/each }}
 		</ul>
 		<script>
 			$( '.dropdown-button' ).dropdown( {
@@ -51,30 +51,30 @@
 </template>
 
 <template name='otherPlayersTab'>
-	{{#each otherPlayers}}
-		{{> playerTab}}
-	{{/each}}
+	{{#each otherPlayers }}
+		{{> playerTab }}
+	{{/each }}
 </template>
 
 <template name='otherPlayers'>
-	{{#each otherPlayers}}
-		{{> player}}
-	{{/each}}
+	{{#each otherPlayers }}
+		{{> player }}
+	{{/each }}
 </template>
 
 <template name='playerTab'>
-	<li class='tab col s3'><a href='#{{username}}'>{{username}} ({{survivors.length}} Survivors)</a></li>
+	<li class='tab col s3'><a href='#{{username}}'>{{ username }} ({{ survivors.length }} Survivors)</a></li>
 </template>
 
 <template name='player'>
 	<div id='{{username}}' class='player col s12'>
-		{{#each survivors}}
-			{{> survivor}}
-		{{/each}}
+		{{#each survivors }}
+			{{> survivor }}
+		{{/each }}
 		
-		{{#if isCurrentPlayer username}}
-			{{> addSurvivor}}
-		{{/if}}
+		{{#if isCurrentPlayer username }}
+			{{> addSurvivor }}
+		{{/if }}
 	</div>
 </template>
 
@@ -95,9 +95,9 @@
 				<image x='{{killsCursorX}}' y='15' width='20' height='50' xlink:href='/imgs/survivors/arrow.png'/>			
 			</svg>
 
-			{{#if isCurrentPlayer ../username}}
-				<button id={{name}} class='removeSurvivor waves-effect waves-light red'>Remove Survivor</button>
-			{{/if}}
+			{{#if isCurrentPlayer ../username }}
+				<button id={{ name }} class='removeSurvivor waves-effect waves-light red'>Remove Survivor</button>
+			{{/if }}
 		</div>
 	<!-- {{else}} -->
 		<!-- <p>Survivor not Available</p> -->

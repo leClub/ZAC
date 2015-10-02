@@ -63,14 +63,27 @@ Meteor.methods( {
 	},
 
 	loadMissions : function() {
-		var data = JSON.parse( Assets.getText( 'missions.json' ) );
+		var data = JSON.parse( Assets.getText( 'missions/missions.json' ) );
 		// console.log( data.missions );
 		return data.missions;
 	},
 
-	createMission : function( missionName ) {
-		return JSON.parse( Assets.getText( missionName + '.json' ) );
-		// return HTTP.get( Meteor.absoluteUrl( 'missions/' + missionName + '.json' ) ).data;
+	setRoomMission : function( roomId, missionFile ) {
+		Rooms.update(
+			{ roomId : roomId }, 
+			{ $set : { mission : new Mission( JSON.parse( Assets.getText( 'missions/' + missionFile ) ) ) } }
+		);
+	},
+
+	removeRoomMission : function( roomId ) {
+		Rooms.update(
+			{ roomId : roomId }, 
+			{ $set : { mission : '' } }
+		);
+	},
+
+	createMission : function( missionFile ) {
+		return JSON.parse( Assets.getText( 'missions/' + missionFile ) );
 	},
 
 	addSurvivor : function( username, survivorName ) {

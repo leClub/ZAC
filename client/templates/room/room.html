@@ -9,39 +9,34 @@
 
 		<div id='roomMain' class='col s10'>
 			{{#if missionNotSet room.mission }}
-				<div id='missionSelectorContainer'>
-					<div class="center-align">
-						<a class='dropdown-button btn' href='#' data-activates='missionSelector'>Select a Mission</a>
-						<ul id='missionSelector' class='dropdown-content'>
-							{{ missions }}
-						</ul>
-					</div>
+				<div id='missionSelectorContainer' class="center-align">
+					<a class='dropdown-button btn' href='#' data-activates='missionSelector'>Select a Mission</a>
+					<ul id='missionSelector' class='dropdown-content'>
+						{{ missions }}
+					</ul>
 				</div>
 			{{ else }}
-				{{> map }}
+				{{> map mission=room.mission }}
 				<!-- {{> players }} -->
-			{{/if}}
+			{{/if }}
 		</div>
 	</div>
 
 	<script>
-		function roomResize(){
-			d3.select('#roomSide').style('height', window.innerHeight - parseInt($('.nav-wrapper').css('height')) + 'px');
+		function roomResize() {
+			d3.select( '#roomSide' ).style( 'height', window.innerHeight - parseInt( $( '.nav-wrapper' ).css( 'height' ) ) + 'px' );
 			
-			d3.select('#chat').style('height', parseInt($('#roomSide').css('height')) - parseInt($('#roomName').css('height')) - 70 + 'px');
+			d3.select( '#chat' ).style( 'height', parseInt( $( '#roomSide' ).css( 'height' ) ) - parseInt( $( '#roomName' ).css( 'height' ) ) - 66 + 'px' );
 
-			d3.select('#ulContainer').style('max-height', parseInt($('#chat').css('height')) - parseInt($('#chat>form').css('height')) + 'px');
-			
-			{{#if missionNotSet room.mission }}
-				// console.log( 'roomResize' );
-				d3.select('#missionSelectorContainer').style('height', window.innerHeight - parseInt($('.nav-wrapper').css('height')) + 'px');
-			{{/if}}
+			d3.select( '#ulContainer' ).style( 'max-height', parseInt( $( '#chat' ).css( 'height' ) ) - parseInt( $( '#chat>form' ).css( 'height' ) ) + 'px' );
+		
+			d3.select( '#roomMain' ).style( 'max-height', window.innerHeight - parseInt( $( '.nav-wrapper' ).css( 'height' ) ) - 10 + 'px' );
 		}
 
 		( function( w, d, u, d3, $ ) {
 			roomResize();
 		} )( window, document, undefined, d3, $ );
 		
-		window.addEventListener('resize', roomResize);
+		window.addEventListener( 'resize', roomResize );
 	</script>
 </template>
