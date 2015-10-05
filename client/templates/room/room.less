@@ -53,48 +53,56 @@
 	}
 
 	#mapContainer{
-		position: relative;
+		// position: relative;
 		padding: 0;
-		margin: 0;	
+		margin: 0;
 		
 		#map{
-			// margin: 20px auto 10px;
-			margin-top: 20px;
+			margin-top: 10px;
 			width: 100%;
-			// height: 1000px;:
 			background: rgba(25, 25, 25, 0.3);
 
 			.zone{
 				opacity: 0.0;
-			}
-
-			.zone:hover{
-				opacity: 0.7;
+				transition: all .5s ease-in-out;
+				
+				&:hover{
+					opacity: 0.7;
+				}
 			}
 
 			.block{
 				opacity: 0.0;
-			}
-			.block:hover{
-				opacity: 0.5;
+				transition: all .5s ease-in-out;
+				
+				&:hover{
+					opacity: 0.5;
+				}
 			}
 		}
 
 		#closeMission{
-			position: absolute;
-			background: rgba(0,0,0,0.5);
-			top: 20px;
-			right: 0;
-			width: 20px;
-			height: 20px;
-			padding: 2px;
+			// position: absolute;
+			background: red;
+			margin-top: 10px;
+			// width: 20px;
+			// height: 20px;
+			padding: 2px 5px;
 			text-align: center;
 			font-size: 10px;
 			font-weight: 800;
+			opacity: 0.3;
+			transition: all .5s ease-in-out;
+
+			&:hover{
+				opacity: 1;
+			}
 
 			a{
-				color: red !important;
+				color: black !important;
 			}
+
+
 		}
 	}
 

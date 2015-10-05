@@ -1,10 +1,8 @@
-Session.setDefault( 'resolution', { 'width' : window.innerWidth, 'height' : window.innerHeight } );
-
-window.onresize = function() {
-	Session.set( 'resolution', { 'width' : window.innerWidth, 'height' : window.innerHeight } );		
-	// console.log( Session.get( 'resolution' ) );
-};
-
-window.onload = function() {
-	// var mission = new Mission( 'mission_01' );
-};
+slugify = function slugify( text ) {
+	return text.toString().toLowerCase()
+		.replace( /\s+/g, '-' ) // Replace spaces with -
+		.replace( /[^\w\-]+/g, '' ) // Remove all non-word chars
+		.replace( /\-\-+/g, '-' ) // Replace multiple - with single -
+		.replace( /^-+/, '' ) // Trim - from start of text
+		.replace( /-+$/, '' ); // Trim - from end of text
+}

@@ -1,22 +1,15 @@
 Template.roomSelection.events( {
 	'click #roomSelectionBtn' : function( event ) {
 		event.preventDefault();
+
+		var player = Players.findOne();
 		
 		var roomId = $( '#roomIdField' )[ 0 ].value;
 		if(roomId != '' ) {
-			Meteor.call( 'joinRoom', slugify(roomId), function() {
+			Meteor.call( 'joinRoom', slugify(roomId), player.username, function() {
 				Router.go('/rooms/' + slugify( $( '#roomIdField' )[ 0 ].value) ) ;
 			} );
 		}
 		else return;
 	}
 } );
-
-function slugify( text ) {
-	return text.toString().toLowerCase()
-		.replace( /\s+/g, '-' ) // Replace spaces with -
-		.replace( /[^\w\-]+/g, '' ) // Remove all non-word chars
-		.replace( /\-\-+/g, '-' ) // Replace multiple - with single -
-		.replace( /^-+/, '' ) // Trim - from start of text
-		.replace( /-+$/, '' ); // Trim - from end of text
-}

@@ -1,8 +1,8 @@
 Template.room.onRendered( function() {
-	var room = Rooms.findOne(),
-		player = Players.findOne();
-	console.log( room );
-	console.log( player );
+	// var room = Rooms.findOne(),
+		// player = Players.findOne();
+	// console.log( room );
+	// console.log( player );
 	// Meteor.call( 'userInRoom', player.username, room.roomId );
 } );
 
@@ -46,8 +46,12 @@ Template.room.helpers( {
 Template.room.events( {
 	'click .mission' : function( event ) {
 		event.preventDefault();
-		var missionFile = event.target.attributes[ 'data-file' ].nodeValue;
+		// console.log( event );
+
+		var missionFile = event.target.attributes[ 'data-file' ].nodeValue,
+			missionName = event.target.innerHTML;
 		var room = Rooms.findOne();
+		Meteor.call( 'newMessage', room.roomId, { 'user' : '#' + room.roomId, 'text' : missionName , 'createdAt' : Date.now() } );
 		Meteor.call( 'setRoomMission', room.roomId, missionFile );
 	}
 } );

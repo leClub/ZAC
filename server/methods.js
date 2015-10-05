@@ -28,11 +28,12 @@ Meteor.methods( {
 		// console.log( 'Player', username, 'disconnected' );
 	},
 
-	joinRoom : function( roomId ) {
+	joinRoom : function( roomId, username ) {
 		if( ! Meteor.call( 'checkRoomExistence', roomId ) ) {
 			console.log( 'room', roomId, 'not found, creating it');
 			Rooms.insert( { 
 				'roomId' : roomId ,
+				'creator' : username,
 				'players': [],
 				'messages': [],
 				'survivors' : [ 'Amy', 'Doug', 'Josh', 'Ned', 'Phil', 'Wanda' ],

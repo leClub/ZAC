@@ -1,8 +1,91 @@
 <template name='map'>
 	<div id='mapContainer'>
+		<div id='closeMission'><a href='' alt='Close Mission'>Close Mission &#10005;</a></div>
 		<svg id='map'></svg>
-		{{{ drawMap mission }}}
-
-		<div id='closeMission'><a href='' alt='Close Mission'>&#10005;</a></div>
 	</div>
+
+	<script>
+		function loadMission(){
+			var mission = ( Rooms.findOne() ).mission,
+				svg = d3.select( '#map' ),
+				mapGroup = svg.append( 'g' ).attr( 'id', 'mapGroup' );
+
+			// add tiles
+			for ( var y = 0; y < mission.tiles.length; y ++ ) {
+				for( var x = 0; x < mission.tiles[ y ].length; x ++ ) {
+					var rotate = 'rotate(' + ( mission.tiles[ y ][ x ].dir * 90 ) + ','
+						+ ( mission.TILE_SIZE / 2 + x * mission.TILE_SIZE ) + ',' 
+						+ ( mission.TILE_SIZE / 2 + y * mission.TILE_SIZE ) + ')';
+
+					mapGroup.append( 'image' )
+						.attr( 'x', x * mission.TILE_SIZE )
+						.attr( 'y', y * mission.TILE_SIZE )
+						.attr( 'width', mission.TILE_SIZE )
+						.attr( 'height', mission.TILE_SIZE )
+						.attr( 'xlink:href', '/imgs/tiles/' + mission.tiles[ y ][ x ].id + '.jpg' )
+						.attr( 'transform', rotate );
+				}
+			}
+
+			// add zones / blocks (streets / buildings)
+			mapGroup.selectAll( 'rect' ).data( mission.rooms )
+				.enter().append( 'rect' )
+				.attr( 'id', function( data ) { return 'room_' + data.id; } )
+				.attr( 'x', function( data ) { return data.x; } )
+				.attr( 'y', function( data ) { return data.y; } )
+				.attr( 'width', function( data ) { return data.w; } )
+				.attr( 'height', function( data ) { return data.h; } );
+			
+			mapGroup.selectAll( 'rect' ).each( function( d, i ) {
+				switch( d.t ){
+					case 0 :
+						d3.select( this )
+							.style( { 'fill': '#212121', 'stroke': 'none', 'fill-opacity': '0.4' } )
+							.attr( 'class', 'zone outside' );
+						break;
+					case 1 :
+						d3.select( this )
+							.style( { 'fill': '#c6ff00', 'stroke': 'none', 'fill-opacity': '0.2' } )
+							.attr( 'class', 'zone inside' );
+						break;
+					case 2 :
+						d3.select( this )
+							.style( { 'stroke': '#212121', 'fill': 'none', 'stroke-width': '10' } )
+							.attr( 'class', 'block street' );
+						break;
+					case 3 :
+						d3.select( this )
+							.style( { 'stroke': '#c6ff00', 'fill': 'none', 'stroke-width': '10' } )
+							.attr( 'class', 'block building' );
+						break;
+				}
+			} );
+			
+			var elementsGroup = svg.append( 'g' ).attr( 'id', 'elementsGroup' );
+
+
+		}
+
+		function setSVGSize() {
+			var mission = ( Rooms.findOne() ).mission,
+				svg = d3.select( '#map' );
+
+			var w = mission.tiles[ 0 ].length * mission.TILE_SIZE,
+				h = mission.tiles.length * mission.TILE_SIZE,
+				viewBox = '0 0 ' + w + ' ' + h,
+				ratio = w / parseFloat( svg.style( 'width' ) ),
+				hRatio = Math.round( h / ratio );
+			
+			svg.style( 'height', hRatio + 'px' )
+				.attr( 'viewBox', viewBox );
+		}
+
+		( function( w, d, u, d3, $ ) {
+			setSVGSize();
+			loadMission();
+		} )( window, document, undefined, d3, $ );
+
+		window.addEventListener( 'resize', setSVGSize );
+	</script>
+
 </template>
