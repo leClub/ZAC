@@ -8,7 +8,7 @@ Template.room.onRendered( () => {
 
 Template.room.helpers( {
 	room : () => {
-		var room = Rooms.findOne();
+		let room = Rooms.findOne();
 		// console.log( room );
 		return room;
 	},
@@ -25,7 +25,7 @@ Template.room.helpers( {
 	},
 
 	missions : () => {
-		var missions = Meteor.call( 'loadMissions', ( error, result ) => {
+		let missions = Meteor.call( 'loadMissions', ( error, result ) => {
 			if( error ) return;
 
 			// console.log( result );
@@ -38,7 +38,7 @@ Template.room.helpers( {
 					.text( mission.name );
 			} );
 
-			$('.dropdown-button').dropdown();
+			$( '.dropdown-button' ).dropdown();
 		} );
 	}
 } );

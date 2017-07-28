@@ -1,9 +1,9 @@
 Template.chat.events( {
-	'submit .newMessage' : function( event ) {
+	'submit .newMessage' : event => {
 		event.preventDefault();
 		var text = event.target.text.value;
-			
-		if( text != ''){
+
+		if( text != '' ){
 			var room = Rooms.findOne(),
 				player = Players.findOne();
 

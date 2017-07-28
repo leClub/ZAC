@@ -1,13 +1,13 @@
 Template.singlePlayer.helpers( {
-	player : function() {
-		var player = Players.findOne();
+	player : () => {
+		let player = Players.findOne();
 		// console.log( player );
 		return player;
 	},
-	
-	test : function( username ) {
+
+	test : username => {
 		// console.log( username );
-		if( username == undefined ) {
+		if( username === undefined ) {
 			window.location = '/';
 		}
 	}

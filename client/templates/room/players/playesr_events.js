@@ -1,19 +1,18 @@
 Template.currentPlayer.events( {
-	'click .removeSurvivor' : function( event ) {
+	'click .removeSurvivor' : event => {
 		event.preventDefault();
-
 		Meteor.call( 'removeSurvivor', Session.get( 'username' ), event.currentTarget.id );
 	}
 } );
 
 Template.addSurvivor.events( {
-	'click .selectSurvivor' : function( event ) {
+	'click .selectSurvivor' : event => {
 		event.preventDefault();
-		
-		var survivorName = $( event.currentTarget ).text();
+
+		let survivorName = $( event.currentTarget ).text();
 		console.log( 'add survivor', survivorName );
-		if(survivorName != '' ) {
+		if( survivorName != '' ) {
 			Meteor.call( 'addSurvivor', Session.get( 'username' ), survivorName );
 		}
-	},
+	}
 } );
