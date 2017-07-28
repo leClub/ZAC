@@ -1,19 +1,19 @@
-<template name='map'>
-	<div id='mapContainer'>
-		<div id='closeMission'><a href='' alt='Close Mission'>Close Mission &#10005;</a></div>
-		<svg id='map'></svg>
+<template name="map">
+	<div id="mapContainer">
+		<div id="closeMission"><a href="" alt="Close Mission">Close Mission &#10005;</a></div>
+		<svg id="map"></svg>
 	</div>
 
 	<script>
 		function loadMission(){
-			var mission = ( Rooms.findOne() ).mission,
+			let mission = ( Rooms.findOne() ).mission,
 				svg = d3.select( '#map' ),
 				mapGroup = svg.append( 'g' ).attr( 'id', 'mapGroup' );
 
 			// add tiles
-			for ( var y = 0; y < mission.tiles.length; y ++ ) {
-				for( var x = 0; x < mission.tiles[ y ].length; x ++ ) {
-					var rotate = 'rotate(' + ( mission.tiles[ y ][ x ].dir * 90 ) + ','
+			for ( let y = 0; y < mission.tiles.length; y ++ ) {
+				for( let x = 0; x < mission.tiles[ y ].length; x ++ ) {
+					let rotate = 'rotate(' + ( mission.tiles[ y ][ x ].dir * 90 ) + ','
 						+ ( mission.TILE_SIZE / 2 + x * mission.TILE_SIZE ) + ','
 						+ ( mission.TILE_SIZE / 2 + y * mission.TILE_SIZE ) + ')';
 
@@ -36,7 +36,7 @@
 				.attr( 'width', data => data.w )
 				.attr( 'height', data => data.h );
 
-			mapGroup.selectAll( 'rect' ).each( ( d, i ) => {
+			mapGroup.selectAll( 'rect' ).each( function( d, i ) {
 				switch( d.t ){
 					case 0 :
 						d3.select( this )
@@ -61,16 +61,16 @@
 				}
 			} );
 
-			var elementsGroup = svg.append( 'g' ).attr( 'id', 'elementsGroup' );
+			let elementsGroup = svg.append( 'g' ).attr( 'id', 'elementsGroup' );
 
 
 		}
 
 		function setSVGSize() {
-			var mission = ( Rooms.findOne() ).mission,
+			let mission = ( Rooms.findOne() ).mission,
 				svg = d3.select( '#map' );
 
-			var w = mission.tiles[ 0 ].length * mission.TILE_SIZE,
+			let w = mission.tiles[ 0 ].length * mission.TILE_SIZE,
 				h = mission.tiles.length * mission.TILE_SIZE,
 				viewBox = '0 0 ' + w + ' ' + h,
 				ratio = w / parseFloat( svg.style( 'width' ) ),

@@ -1,12 +1,12 @@
-<template name='chat'>
-	<div id='chat' class='hoverable'>
-		<form class='newMessage hoverable'>
-			<input type='text' name='text' placeholder='Enter message' autocomplete='off'>
+<template name="chat">
+	<div id="chat" class="hoverable">
+		<form class="newMessage hoverable">
+			<input type="text" name="text" placeholder="Enter message" autocomplete="off">
 		</form>
-		<div id='ulContainer'>
+		<div id="ulContainer">
 			<ul>
 				{{#each messages }}
-					<li><span class='username'>{{ user }}</span>: {{ text }}</li>
+					<li><span class="username">{{ user }}</span>: {{ text }}</li>
 				{{/each }}
 			</ul>
 		</div>

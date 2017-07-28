@@ -1,17 +1,17 @@
- <template name='mainLayout'>
+ <template name="mainLayout">
 	{{#if currentUser }}
-		{{> ensureSignedIn template='signedIn' }}
+		{{> ensureSignedIn template="signedIn" }}
 	{{else}}
 		{{> signin }}
 	{{/if }}
 </template>
 
-<template name='signedIn'>
+<template name="signedIn">
 	{{> bg }}
 
 	{{> navbar }}
 
-	<div id='content'>
+	<div id="content">
 		{{> yield }}
 	</div>
 </template>

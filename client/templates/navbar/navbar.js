@@ -1,15 +1,15 @@
 Template.navbar.helpers( {
-	username : function() {
+	username : () => {
 		var username = Session.get( 'username' );
-		if( username == null ) AccountsTemplates.logout();
+		if( username === null ) AccountsTemplates.logout();
 		else return username;
 	}
 } );
 
 Template.navbar.events( {
-	'click #logout' : function( event ) {
+	'click #logout' : event => {
 		event.preventDefault();
-		
+
 		var username = Session.get( 'username' );
 		Meteor.call( 'logoutPlayer', username );
 		AccountsTemplates.logout();
