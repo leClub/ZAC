@@ -1,11 +1,12 @@
-var giphyData;
+let giphyData = {};
 
 Template.bg.helpers( {
-	getGiphy : function(){
-		// console.log( 'getGiphy' );
-		d3.json( 'http://api.giphy.com/v1/gifs/search?q=zombies&api_key=dc6zaTOxFJmzC', function( err, json ) {
+	getGiphy : () => {
+		console.log( 'getGiphy' );
+		d3.json( 'https://api.giphy.com/v1/gifs/search?api_key=061a223bd4fa41a79779496320ca32c6&q=zombies&limit=100&offset=0&rating=PG-13&lang=en', ( err, json ) => {
 			if( err ) console.log( err );
 			else{
+				console.log( json );
 				giphyData = json;
 				setBackground();
 			}
@@ -14,11 +15,8 @@ Template.bg.helpers( {
 } );
 
 function setBackground() {
-	// console.log( json.data[ Math.floor( Math.random() * json.data.length ) ].images.original.url );
 	d3.select( '.giphy' )
-		.attr( 'src', function() {
-			return giphyData.data[ Math.floor( Math.random() * giphyData.data.length ) ].images.original.url;
-		} );
+		.attr( 'src', giphyData.data[ Math.floor( Math.random() * giphyData.data.length ) ].images.original.url );
 
 	Meteor.setTimeout( setBackground, 30000 );
 }

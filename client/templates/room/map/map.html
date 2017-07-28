@@ -14,7 +14,7 @@
 			for ( var y = 0; y < mission.tiles.length; y ++ ) {
 				for( var x = 0; x < mission.tiles[ y ].length; x ++ ) {
 					var rotate = 'rotate(' + ( mission.tiles[ y ][ x ].dir * 90 ) + ','
-						+ ( mission.TILE_SIZE / 2 + x * mission.TILE_SIZE ) + ',' 
+						+ ( mission.TILE_SIZE / 2 + x * mission.TILE_SIZE ) + ','
 						+ ( mission.TILE_SIZE / 2 + y * mission.TILE_SIZE ) + ')';
 
 					mapGroup.append( 'image' )
@@ -30,13 +30,13 @@
 			// add zones / blocks (streets / buildings)
 			mapGroup.selectAll( 'rect' ).data( mission.rooms )
 				.enter().append( 'rect' )
-				.attr( 'id', function( data ) { return 'room_' + data.id; } )
-				.attr( 'x', function( data ) { return data.x; } )
-				.attr( 'y', function( data ) { return data.y; } )
-				.attr( 'width', function( data ) { return data.w; } )
-				.attr( 'height', function( data ) { return data.h; } );
-			
-			mapGroup.selectAll( 'rect' ).each( function( d, i ) {
+				.attr( 'id', data => 'room_' + data.id )
+				.attr( 'x', data => data.x )
+				.attr( 'y', data => data.y )
+				.attr( 'width', data => data.w )
+				.attr( 'height', data => data.h );
+
+			mapGroup.selectAll( 'rect' ).each( ( d, i ) => {
 				switch( d.t ){
 					case 0 :
 						d3.select( this )
@@ -60,7 +60,7 @@
 						break;
 				}
 			} );
-			
+
 			var elementsGroup = svg.append( 'g' ).attr( 'id', 'elementsGroup' );
 
 
@@ -75,7 +75,7 @@
 				viewBox = '0 0 ' + w + ' ' + h,
 				ratio = w / parseFloat( svg.style( 'width' ) ),
 				hRatio = Math.round( h / ratio );
-			
+
 			svg.style( 'height', hRatio + 'px' )
 				.attr( 'viewBox', viewBox );
 		}
